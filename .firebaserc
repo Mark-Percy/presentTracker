@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "presenttracker-eb5ce": {
+      "hosting": {
+        "presentTracker": [
+          "presenttracker-eb5ce"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "presenttracker-eb5ce"
+  }
+}

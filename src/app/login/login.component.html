@@ -1,0 +1,9 @@
+<button (click)="signUp = !signUp">Already Have account?</button>
+<form [formGroup]="loginForm" (ngSubmit)="submit()">
+    <label for="email">Email</label>
+    <div *ngIf="loginForm.touched && loginForm.dirty">{{loginForm.status}} Error</div>
+    <input type="text" name="email" formControlName="email">
+    <label for="password">Password</label>
+    <input type="password" name="password" formControlName="password">
+    <button >{{signUp ? 'Create Account': 'Login'}}</button>
+</form>
