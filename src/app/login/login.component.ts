@@ -21,7 +21,6 @@ export class LoginComponent {
   submit() {
     if(this.signUp) this.createAccount();
     else this.login()
-    console.log('submitted')
   }
   
   createAccount() {

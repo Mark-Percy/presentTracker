@@ -1,1 +1,15 @@
-<p>dashboard works!</p>
+<div>
+    <h3>Events for {{selectedYear}}</h3>
+    <button (click)="this.addNewEvent=true">Add</button>
+    <ul>
+        <li *ngFor="let event of events | async">{{event['name']}} <button (click)="remove(event['id'])">delete</button></li>
+    </ul>
+</div>
+<div *ngIf="addNewEvent">
+    <h3>New Event</h3>
+    <form [formGroup]="eventForm" (ngSubmit)="addEvent()">
+        <input type="text" formControlName="name">
+        <input type="text" formControlName="year">
+        <button>Submit</button>
+    </form>
+</div>
