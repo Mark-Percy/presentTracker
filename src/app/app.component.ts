@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthenticationService } from './authentication.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +13,7 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     if(this.date.getMonth() == 11) this.createSnowflakes();
   }
-
+  constructor(private authService: AuthenticationService, private router: Router) {}
   createSnowflakes() {
     const snowflakesContainer = document.querySelector('.snowfall-background');
     for (let i = 0; i < 100; i++) {
@@ -25,6 +27,11 @@ export class AppComponent implements OnInit {
 
       snowflakesContainer?.appendChild(snowflake);
     }
+  }
+
+  signout() {
+    this.authService.logout()
+    this.router.navigate(['login'])
   }
 
 }
