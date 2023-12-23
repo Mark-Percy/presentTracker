@@ -17,9 +17,7 @@ export class DashboardComponent {
     name: ['', Validators.required],
     year: [new Date().getFullYear(), Validators.required]
   });
-  constructor(private fb: FormBuilder, private eventService: EventsService, private authService: AuthenticationService) {
-    console.log(this.authService.user?.uid);
-  }
+  constructor(private fb: FormBuilder, private eventService: EventsService, private authService: AuthenticationService) {}
 
   addEvent() {
     const name = this.eventForm.value.name;

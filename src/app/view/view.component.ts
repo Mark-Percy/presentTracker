@@ -20,7 +20,6 @@ export class ViewComponent implements OnInit {
       const id = params.get('event')
       if(year && id) {
         const event = await this.eventService.getEvent(year, id)
-        console.log(event.data())
         this.eventName = event.get('name')
       }
 
