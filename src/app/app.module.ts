@@ -11,6 +11,7 @@ import { provideFirestore,getFirestore,  } from '@angular/fire/firestore';
 import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { PeopleComponent } from './people/people.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AppComponent,
     LoginComponent,
     DashboardComponent,
+    PeopleComponent,
   ],
   imports: [
     BrowserModule,

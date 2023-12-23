@@ -20,11 +20,8 @@ export class EventsService {
 
   getEventsforYear(year: number) {
     let uid: string | null = '';
-    if(!this.authService.user) {
-      uid = localStorage.getItem('uid');
-    } else {
-      uid = this.authService.user.uid;
-    }
+    if(this.authService.user) uid = this.authService.user.uid;
+    else uid = localStorage.getItem('uid');
     const eventsCol = collection(this.fs, `users/${uid}/${year}`);
     return collectionData(eventsCol, {idField: 'id'});
   }

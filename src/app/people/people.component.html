@@ -1,0 +1,22 @@
+<h3>People</h3><span><button (click)="addPerson = !addPerson">Add</button></span>
+<div *ngIf="addPerson">
+    <form [formGroup]="personForm" (ngSubmit)="addPersonStore()">
+        <label for="name"></label>
+        <input name="name" type="text" formControlName="name">
+        <label for="dob"></label>
+        <input name="dob" type="datetime-local" formControlName="dob">
+        <button>Submit</button>
+    </form>
+</div>
+<div>
+    <ul>
+        <li *ngFor="let person of people | async">
+            <div>
+                {{person['name']}}
+            </div>
+            <div>
+                <button>Delete</button>
+            </div>
+        </li>
+    </ul>
+</div>
