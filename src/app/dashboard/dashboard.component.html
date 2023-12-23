@@ -2,7 +2,10 @@
     <h3>Events for {{selectedYear}}</h3>
     <button (click)="this.addNewEvent=true">Add</button>
     <ul>
-        <li *ngFor="let event of events | async">{{event['name']}} <button (click)="remove(event['id'])">delete</button></li>
+        <li *ngFor="let event of events | async">{{event['name']}}
+            <button (click)="remove(event['id'])">delete</button>
+            <button [routerLink]="['/','view-event', selectedYear, event['id']]">View</button>
+        </li>
     </ul>
 </div>
 <div *ngIf="addNewEvent">

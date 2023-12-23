@@ -12,6 +12,7 @@ import { LoginComponent } from './login/login.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PeopleComponent } from './people/people.component';
+import { ViewComponent } from './view/view.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { PeopleComponent } from './people/people.component';
     LoginComponent,
     DashboardComponent,
     PeopleComponent,
+    ViewComponent,
   ],
   imports: [
     BrowserModule,

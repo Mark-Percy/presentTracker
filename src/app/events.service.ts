@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, collectionData, doc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, doc, deleteDoc, getDoc } from '@angular/fire/firestore';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({
@@ -10,29 +10,26 @@ export class EventsService {
   constructor(private fs: Firestore, private authService: AuthenticationService) { }
 
   addEvent(name: string, year: number) {
-    if(!this.authService.user) {
-      return
-    }
-    const uid = this.authService.user.uid; 
+    const uid = this.authService.getUid()
     const eventCollection = collection(this.fs, `users/${uid}/${year}`);
     addDoc(eventCollection, {name: name});
   }
 
+  async getEvent(year: string, id: string) {
+    const uid = this.authService.getUid()
+    const eventRef = doc(this.fs, `/users/${uid}/${year}/${id}`);
+    const eventSnap = await getDoc(eventRef)
+    return eventSnap
+  }
+
   getEventsforYear(year: number) {
-    let uid: string | null = '';
-    if(this.authService.user) uid = this.authService.user.uid;
-    else uid = localStorage.getItem('uid');
+    const uid = this.authService.getUid()
     const eventsCol = collection(this.fs, `users/${uid}/${year}`);
     return collectionData(eventsCol, {idField: 'id'});
   }
 
   removeEvent(year: number, id: string) {
-    let uid: string | null = '';
-    if(!this.authService.user) {
-      uid = localStorage.getItem('uid');
-    } else {
-      uid = this.authService.user.uid;
-    }
+    const uid = this.authService.getUid()
     const docRef = doc(this.fs, `users/${uid}/${year}/${id}`);
     deleteDoc(docRef);
   }

@@ -10,17 +10,13 @@ export class PeopleService {
   constructor(private fs: Firestore, private authService: AuthenticationService) { }
 
   addPerson(person: Person) {
-    let uid: string | null = '';
-    if(this.authService.user) uid = this.authService.user.uid;
-    else uid = localStorage.getItem('uid');
+    const uid = this.authService.getUid()
     const personCol = collection(this.fs, `users/${uid}/people`);
     addDoc(personCol, person)
   }
 
   getAllPeople() {
-    let uid: string | null = '';
-    if(this.authService.user) uid = this.authService.user.uid;
-    else uid = localStorage.getItem('uid');
+    const uid = this.authService.getUid()
     const peopleCol = collection(this.fs, `users/${uid}/people`);
     return collectionData(peopleCol, {idField: 'id'});
   }

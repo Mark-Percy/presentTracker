@@ -34,4 +34,9 @@ export class AuthenticationService {
   async login(email: string, password: string) {
     return signInWithEmailAndPassword(this.auth, email, password)
   }
+
+  getUid() {
+    if(this.user) return this.user.uid;
+    else return localStorage.getItem('uid');
+  }
 }
