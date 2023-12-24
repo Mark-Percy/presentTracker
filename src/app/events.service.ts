@@ -10,34 +10,51 @@ export class EventsService {
   constructor(private fs: Firestore, private authService: AuthenticationService) { }
 
   addEvent(name: string, year: number) {
-    const uid = this.authService.getUid()
+    const uid = this.authService.getUid();
     const eventCollection = collection(this.fs, `users/${uid}/${year}`);
     addDoc(eventCollection, {name: name});
   }
 
   async getEvent(year: string, id: string) {
-    const uid = this.authService.getUid()
+    const uid = this.authService.getUid();
     const eventRef = doc(this.fs, `/users/${uid}/${year}/${id}`);
-    const eventSnap = await getDoc(eventRef)
-    return eventSnap
+    const eventSnap = await getDoc(eventRef);
+    return eventSnap;
   }
 
   getEventsforYear(year: number) {
-    const uid = this.authService.getUid()
+    const uid = this.authService.getUid();
     const eventsCol = collection(this.fs, `users/${uid}/${year}`);
     return collectionData(eventsCol, {idField: 'id'});
   }
 
   removeEvent(year: number, id: string) {
-    const uid = this.authService.getUid()
+    const uid = this.authService.getUid();
     const docRef = doc(this.fs, `users/${uid}/${year}/${id}`);
     deleteDoc(docRef);
   }
 
   addPersonToEvent(year: string, eventId: string, people: (string| undefined)[]) {
-    const uid = this.authService.getUid()
+    const uid = this.authService.getUid();
     const docRef = doc(this.fs, `users/${uid}/${year}/${eventId}`);
-    updateDoc(docRef, {people: people})
+    updateDoc(docRef, {people: people});
 
+  }
+
+  async addStages(year: string, eventId:string, stages: string[]) {
+    const uid = this.authService.getUid();
+    const eventRef = doc(this.fs, `users/${uid}/${year}/${eventId}`);
+    const eventSnap = await getDoc(eventRef);
+    if(eventSnap.exists()) {
+      const existingStages = eventSnap.get('stages');
+      let merged = [];
+      if(existingStages) {
+        merged = stages.concat(existingStages);
+      } else {
+        merged = stages;
+      }
+      console.log(merged)
+      updateDoc(eventRef, {stages: merged})
+    }
   }
 }

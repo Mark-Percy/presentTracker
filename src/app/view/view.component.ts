@@ -16,6 +16,8 @@ export class ViewComponent implements OnInit {
   people = this.peopleService.getAllPeople()
   unaddedPeople: Person[] = [];
   addedPeople: Person[] = [];
+  eventStages: string[] = []
+  defaultStages: string[] = ['Bought', 'Wrapped'];
   
   constructor(
     private route: ActivatedRoute,
@@ -40,6 +42,7 @@ export class ViewComponent implements OnInit {
         const event = await this.eventService.getEvent(year, id)
         this.eventName = event.get('name');
         this.eventPeople = event.get('people')
+        this.eventStages = event.get('stages')
       }
 
       else this.router.navigate(['dashboard']);
@@ -58,5 +61,9 @@ export class ViewComponent implements OnInit {
       this.addedPeople.push(person)
     }
     if(this.year && this.eventId) this.eventService.addPersonToEvent(this.year, this.eventId, peopleAdded);
+  }
+
+  addDefaultStages() {
+    if(this.year && this.eventId) this.eventService.addStages(this.year, this.eventId, this.defaultStages)
   }
 }
