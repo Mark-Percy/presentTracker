@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, addDoc, collection, collectionData, doc, deleteDoc, getDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, collectionData, doc, deleteDoc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({
@@ -32,5 +32,12 @@ export class EventsService {
     const uid = this.authService.getUid()
     const docRef = doc(this.fs, `users/${uid}/${year}/${id}`);
     deleteDoc(docRef);
+  }
+
+  addPersonToEvent(year: string, eventId: string, people: (string| undefined)[]) {
+    const uid = this.authService.getUid()
+    const docRef = doc(this.fs, `users/${uid}/${year}/${eventId}`);
+    updateDoc(docRef, {people: people})
+
   }
 }

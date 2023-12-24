@@ -1,2 +1,4 @@
 <button [routerLink]="['/','dashboard']">Dashboard</button>
 <h1>{{eventName}}</h1>
+<div *ngFor="let person of addedPeople">{{person['name']}}</div>
+<button *ngFor="let person of unaddedPeople" (click)="addToEvent(person.id)">{{person.name}}</button>
