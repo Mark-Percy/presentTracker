@@ -1,7 +1,7 @@
 <button [routerLink]="['/','dashboard']">Dashboard</button>
 <h1>{{eventName}}</h1>
 <button>SetUp stages</button>
-<button (click)="addDefaultStages()">add default stages</button>
+<button *ngIf="eventStages.length == 0" (click)="addDefaultStages()">add default stages</button>
 <div class="stages">
     <div>People</div>
     <div *ngFor="let stage of eventStages">{{stage}}</div>
