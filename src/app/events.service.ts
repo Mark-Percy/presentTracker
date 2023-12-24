@@ -34,10 +34,17 @@ export class EventsService {
     deleteDoc(docRef);
   }
 
-  addPersonToEvent(year: string, eventId: string, people: (string| undefined)[]) {
+  async addPersonToEvent(year: string, eventId: string, person: personInEvent) {
     const uid = this.authService.getUid();
     const docRef = doc(this.fs, `users/${uid}/${year}/${eventId}`);
-    updateDoc(docRef, {people: people});
+    const docSnap = await getDoc(docRef)
+    if(docSnap.exists()) {
+      const peopleAdd = docSnap.get('people')
+      if(peopleAdd) {
+        peopleAdd.push(person);
+        updateDoc(docRef, {people: peopleAdd})
+      } else updateDoc(docRef, {people: [person]});
+    }
 
   }
 
@@ -53,8 +60,18 @@ export class EventsService {
       } else {
         merged = stages;
       }
-      console.log(merged)
       updateDoc(eventRef, {stages: merged})
     }
   }
+
+  saveStages(year: string,  eventId: string, peopleStages: personInEvent[]) {
+    const uid = this.authService.getUid();
+    const eventRef = doc(this.fs, `users/${uid}/${year}/${eventId}`)
+    updateDoc(eventRef, {people: peopleStages})
+  }
+}
+
+export interface personInEvent {
+  id: string
+  completedTasks: number[]
 }
